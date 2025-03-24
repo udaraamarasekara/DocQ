@@ -11,4 +11,7 @@ class AuthViewModel {
     func register(username:String,email:String,password:String) {
         
     }
+    func login (email:String,password:String) {
+        
+    }
 }
