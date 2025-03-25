@@ -42,10 +42,6 @@ struct UserRegistrationView: View {
             Text("Do you have an account?").opacity(0.5)
             Text("Sign In").bold().foregroundColor(Color("MainColor"))
         }
-        HStack{
-            Text("Have a doctor account ?").opacity(0.5)
-            Text("Sign In as doctor").bold().foregroundColor(Color("MainColor"))
-        }
         
     }
 }

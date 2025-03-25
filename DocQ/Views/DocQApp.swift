@@ -14,7 +14,7 @@ struct DocQApp: App {
             ZStack {
                 Color.white
                     .ignoresSafeArea()
-                UserRegistrationView()
+                PatientClinicsView().padding(.top,0)
             }
         }
     }
