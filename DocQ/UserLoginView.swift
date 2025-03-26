@@ -23,9 +23,9 @@ struct UserLoginView: View {
             CustomButton(title:"Login" ){viewModel.login( email:email, password: password
             )}.padding()
             
-                .padding()
            
-        }
+        }.padding()
+
     }
 }
 

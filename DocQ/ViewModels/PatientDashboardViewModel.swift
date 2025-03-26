@@ -61,7 +61,7 @@ class PatientDashboardViewModel:NSObject,UNUserNotificationCenterDelegate,Observ
                 content.sound = .default
                 
                 // Trigger the notification in 0.5 seconds
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
                 
                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
                 
