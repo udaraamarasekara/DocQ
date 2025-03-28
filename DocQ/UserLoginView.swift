@@ -18,10 +18,10 @@ struct UserLoginView: View {
             Image("AppLogo")
             Text("Hi Welcome back").font(.title)
             Text("Hope you are doing fine!").opacity(0.5).padding(.bottom)
-            CustomTextField(placeholder: "Your Email", text:$email)
-            CustomTextField(placeholder:"Password", text:$password, isSecure: true)
+            CustomTextField(placeholder: "Your Email", text:$email).padding(.horizontal)
+            CustomTextField(placeholder:"Password", text:$password, isSecure: true).padding(.horizontal)
             CustomButton(title:"Login" ){viewModel.login( email:email, password: password
-            )}.padding()
+            )}.padding(.top).padding(.horizontal)
             
            
         }.padding()

@@ -17,8 +17,8 @@ import SwiftUI
 struct GreenButton: View {
     var title: String
     var action: () -> Void
-    var backgroundColor: Color = Color.green
-    var foregroundColor: Color = Color.white
+    var backgroundColor: Color = .green
+    var foregroundColor: Color = .white
 
     var body: some View {
         Button(action: action) {
@@ -28,8 +28,8 @@ struct GreenButton: View {
                 .background(backgroundColor)
                 .foregroundColor(foregroundColor)
                 .cornerRadius(10)
-        }  .buttonStyle(PlainButtonStyle()) // 💡 removes default tap effect spacing
-            .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(PlainButtonStyle())
+        .frame(maxWidth: .infinity).padding(.horizontal)
     }
 }
-

@@ -64,7 +64,7 @@ struct PatientClinicsView: View {
             
             HStack{
                 ScrollView(.horizontal, showsIndicators: false) {
-                    DoctorCard()
+                    DoctorCardNoClin()
                     
                 }
             }.padding()

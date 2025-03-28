@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68001A032D96BAF400A2EB32 /* Responses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68001A022D96BAF400A2EB32 /* Responses.swift */; };
+		68001A052D96BEA800A2EB32 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68001A042D96BEA600A2EB32 /* Api.swift */; };
 		6846CFFA2D92E032006EB454 /* PatientSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6846CFF92D92E032006EB454 /* PatientSearchView.swift */; };
 		6846CFFC2D92F05F006EB454 /* PatientBookDocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6846CFFB2D92F05F006EB454 /* PatientBookDocView.swift */; };
 		686E8AAF2D93EA9A00AC1919 /* DoctorDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686E8AAE2D93EA9A00AC1919 /* DoctorDashboardViewModel.swift */; };
@@ -52,6 +54,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		68001A022D96BAF400A2EB32 /* Responses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responses.swift; sourceTree = "<group>"; };
+		68001A042D96BEA600A2EB32 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		6846CFF92D92E032006EB454 /* PatientSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientSearchView.swift; sourceTree = "<group>"; };
 		6846CFFB2D92F05F006EB454 /* PatientBookDocView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientBookDocView.swift; sourceTree = "<group>"; };
 		686E8AAE2D93EA9A00AC1919 /* DoctorDashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorDashboardViewModel.swift; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 		6881AAF42D903C40002B015F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				68001A042D96BEA600A2EB32 /* Api.swift */,
+				68001A022D96BAF400A2EB32 /* Responses.swift */,
 				68877CA82D92796C00FC24A2 /* ClinicModel.swift */,
 			);
 			path = Models;
@@ -352,6 +358,8 @@
 				6846CFFC2D92F05F006EB454 /* PatientBookDocView.swift in Sources */,
 				68E5CBCD2D914B5200F7F6E0 /* AuthViewModel.swift in Sources */,
 				6895D1232D91A3F60091E34D /* UserLoginView.swift in Sources */,
+				68001A032D96BAF400A2EB32 /* Responses.swift in Sources */,
+				68001A052D96BEA800A2EB32 /* Api.swift in Sources */,
 				686E8AAF2D93EA9A00AC1919 /* DoctorDashboardViewModel.swift in Sources */,
 				6895D1352D91B8180091E34D /* PatientDashboardViewModel.swift in Sources */,
 				687607082D94112200287AD9 /* NurseDocApointView.swift in Sources */,

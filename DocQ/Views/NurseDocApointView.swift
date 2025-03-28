@@ -11,7 +11,7 @@ import SwiftUI
 struct NurseDocApointView: View {
     var body: some View {
         ScrollView(.vertical,showsIndicators: false){
-            DocQueueCard()
+            NursePatientCard()
         }
     }
 }

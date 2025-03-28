@@ -17,19 +17,22 @@ import SwiftUI
 struct RedButton: View {
     var title: String
     var action: () -> Void
-    var backgroundColor: Color = Color.red
-    var foregroundColor: Color = Color.white
+    var backgroundColor: Color = .red
+    var foregroundColor: Color = .white
 
     var body: some View {
         Button(action: action) {
             Text(title)
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity) // Centers the title and stretches it
                 .padding()
                 .background(backgroundColor)
                 .foregroundColor(foregroundColor)
                 .cornerRadius(10)
-        }  .buttonStyle(PlainButtonStyle()) // 💡 removes default tap effect spacing
-            .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(PlainButtonStyle()) // Removes default tap effect spacing
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(backgroundColor, lineWidth: 1) // Optional border for the red button
+        ).padding(.horizontal)
     }
 }
-

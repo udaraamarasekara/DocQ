@@ -10,23 +10,22 @@ import SwiftUI
 struct InverseCustomButton: View {
     var title: String
     var action: () -> Void
-    var backgroundColor: Color = Color.white
+    var backgroundColor: Color = .white
     var foregroundColor: Color = Color("MainColor")
 
     var body: some View {
         Button(action: action) {
             Text(title)
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity) // Keeps the text centered and stretched
                 .padding()
                 .background(backgroundColor)
                 .foregroundColor(foregroundColor)
                 .cornerRadius(10)
-        }  .buttonStyle(PlainButtonStyle()) // 💡 removes default tap effect spacing
-            .frame(maxWidth: .infinity).overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color("MainColor"), lineWidth: 1)
-            )
+        }
+        .buttonStyle(PlainButtonStyle()) // Removes default tap effect spacing
+        .overlay(
+            RoundedRectangle(cornerRadius: 10) // Slightly adjusted cornerRadius
+                .stroke(foregroundColor, lineWidth: 1)
+        )
     }
 }
-
-

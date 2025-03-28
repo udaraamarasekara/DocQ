@@ -11,18 +11,25 @@ struct UserRegistrationView: View {
     @State private var username: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
-     var viewModel = AuthViewModel()
+    @StateObject private var viewModel = AuthViewModel()
 
     var body: some View {
         VStack {
+            if !viewModel.message.isEmpty {
+                Text(viewModel.message)
+                    .foregroundColor(viewModel.isError ? .red : .green)
+                    .multilineTextAlignment(.center)
+                    .padding()
+            }
+            
             Image("AppLogo")
             Text("Create Account").font(.title)
             Text("We are here to help you!").opacity(0.5).padding(.bottom)
-            CustomTextField(placeholder:"Your Name", text: $username)
-            CustomTextField(placeholder: "Your Email", text:$email)
-            CustomTextField(placeholder:"Password", text:$password, isSecure: true)
+            CustomTextField(placeholder:"Your Name", text: $username).padding(.horizontal)
+            CustomTextField(placeholder: "Your Email", text:$email).padding(.horizontal)
+            CustomTextField(placeholder:"Password", text:$password, isSecure: true).padding(.horizontal)
             CustomButton(title:"Create Account" ){viewModel.register(username: username, email:email, password: password
-            )}.padding()
+            )}.padding(.top).padding(.horizontal)
             HStack{
                 VStack{
                     Divider()
@@ -36,12 +43,16 @@ struct UserRegistrationView: View {
                         .frame(height: 1)
                         .background(Color.gray.opacity(0.4))
                 }.padding()
-            }}
-        .padding()
-        HStack{
-            Text("Do you have an account?").opacity(0.5)
-            Text("Sign In").bold().foregroundColor(Color("MainColor"))
-        }
+            }
+            
+            HStack{
+                Text("Do you have an account?").opacity(0.5)
+                Button(action: {
+                    
+                }) {
+                    Text("Sign In").bold().foregroundColor(Color("MainColor"))
+                }}
+}.padding()
         
     }
 }

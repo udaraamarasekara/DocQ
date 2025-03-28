@@ -1,10 +1,3 @@
-//
-//  SwiftUIView.swift
-//  DocQ
-//
-//  Created by udara prabath on 2025-03-24.
-//
-
 import SwiftUI
 
 struct CustomTextField: View {
@@ -19,7 +12,8 @@ struct CustomTextField: View {
             } else {
                 TextField(placeholder, text: $text)
             }
-        }.textFieldStyle(.plain)
+        }
+        .textFieldStyle(.plain)
         .padding(12)
         .background(Color(red: 0.976, green: 0.980, blue: 0.984)) // #F9FAFB
         .cornerRadius(10)
@@ -28,7 +22,9 @@ struct CustomTextField: View {
                 .stroke(Color.gray.opacity(0.3), lineWidth: 1)
         )
         .foregroundColor(.black)
+        .frame(maxWidth: .infinity).padding(.horizontal) // Let it expand within parent
     }
 }
+
 
 

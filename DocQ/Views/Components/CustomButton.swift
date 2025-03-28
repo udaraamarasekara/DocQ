@@ -16,13 +16,15 @@ struct CustomButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity) // This stays to center the text within the button
                 .padding()
                 .background(backgroundColor)
                 .foregroundColor(foregroundColor)
                 .cornerRadius(10)
-        }  .buttonStyle(PlainButtonStyle()) // 💡 removes default tap effect spacing
-            .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(PlainButtonStyle())
+        .padding(.horizontal) //  Use this instead of .frame
     }
 }
+
 
