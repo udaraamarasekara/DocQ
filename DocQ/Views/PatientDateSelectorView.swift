@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PatientDateSelectorView: View {
     @State private var selectedDate = Date()
+    @EnvironmentObject var sessionManager: SessionManager
     @State var isPresented: Bool = true
     var body: some View {
         ZStack{

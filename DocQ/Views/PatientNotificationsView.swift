@@ -6,6 +6,8 @@
 import SwiftUI
 
 struct PatientNotificationsView: View {
+    @EnvironmentObject var sessionManager: SessionManager
+    
     var body: some View {
         HStack{
             Image(systemName: "arrow.left")

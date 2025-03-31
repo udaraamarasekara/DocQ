@@ -8,16 +8,20 @@
 import SwiftUI
 
 struct PatientCard: View {
+    private var appointment:AppointmentResponse
+    init(appointment : AppointmentResponse){
+        self.appointment = appointment
+    }
     var body: some View {
         HStack{
             ScrollView(.vertical, showsIndicators: false) {
                 HStack{
                     VStack{
-                        Text("Patient name").bold()
-                      Text("token")
+                        Text(appointment.name).bold()
+                        Text(appointment.token)
                     }
                     Spacer()
-                    Text("Status").bold().padding(4)
+                    Text(appointment.status).bold().padding(4)
                         .foregroundColor(Color.green).cornerRadius(10)
                 }
                 Divider()
@@ -32,6 +36,6 @@ struct PatientCard: View {
     }
 }
 
-#Preview {
-    PatientCard()
-}
+//#Preview {
+//    PatientCard()
+//}

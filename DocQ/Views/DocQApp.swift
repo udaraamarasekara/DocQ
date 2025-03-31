@@ -10,10 +10,12 @@ import SwiftUI
 @available(iOS 16.0, *)
 @main
 struct DocQApp: App {
-    
+    @StateObject var sessionManager = SessionManager()
+    @State  var navigationPath = NavigationPath()
     var body: some Scene {
-        @EnvironmentObject var sessionManager: SessionManager  // Access the session object
-        @State  var navigationPath = NavigationPath()
+        
+        // Access the session object
+        
 
         WindowGroup {
             ZStack {
@@ -23,7 +25,7 @@ struct DocQApp: App {
                     
                     UserRegistrationView()
                 }
-                }
+            }.environmentObject(sessionManager)
         }
     }
 }

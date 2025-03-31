@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PatientDashboardView: View {
+    @EnvironmentObject var sessionManager: SessionManager
     @StateObject private var viewModel = PatientDashboardViewModel()
     let rows = [
         GridItem(.fixed(50),spacing:33),

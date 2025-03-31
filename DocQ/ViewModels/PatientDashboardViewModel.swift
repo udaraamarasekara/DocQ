@@ -10,33 +10,32 @@ import Combine;
 import UserNotifications
 class PatientDashboardViewModel:NSObject,UNUserNotificationCenterDelegate,ObservableObject{
     @Published var notificationCount: Int = 0
-    @Published var clinics: [ClinicModel] = []
        @Published var isLoading = false
-    func fetchClinics() {
-            guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
-
-            isLoading = true
-
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            DispatchQueue.main.async {
-                self.isLoading = false
-            }
-            
-            if let data = data {
-                do {
-                    let decodedPosts = try JSONDecoder().decode([ClinicModel].self, from: data)
-                    DispatchQueue.main.async {
-                        self.clinics = decodedPosts
-                    }
-                } catch {
-                    print("Error decoding posts: \(error)")
-                }
-            } else if let error = error {
-                print("Error fetching posts: \(error)")
-            }
-         }.resume()
-        }
-    
+//    func fetchClinics() {
+//            guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
+//
+//            isLoading = true
+//
+//        URLSession.shared.dataTask(with: url) { data, response, error in
+//            DispatchQueue.main.async {
+//                self.isLoading = false
+//            }
+//            
+//            if let data = data {
+//                do {
+//                    let decodedPosts = try JSONDecoder().decode([ClinicModel].self, from: data)
+//                    DispatchQueue.main.async {
+//                        self.clinics = decodedPosts
+//                    }
+//                } catch {
+//                    print("Error decoding posts: \(error)")
+//                }
+//            } else if let error = error {
+//                print("Error fetching posts: \(error)")
+//            }
+//         }.resume()
+//        }
+//    
     func requestNotificationPermission(completion: @escaping (Bool) -> Void) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {

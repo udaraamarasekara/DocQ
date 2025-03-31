@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PatientBookDocView: View {
+    @EnvironmentObject var sessionManager: SessionManager
     var body: some View {
         ScrollView(.vertical,showsIndicators: false){
             BookDocCard()

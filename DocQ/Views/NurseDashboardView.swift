@@ -10,6 +10,7 @@ import SwiftUI
 
 struct NurseDashboardView: View {
     @StateObject private var viewModel = NurseDashboardViewModel()
+    @EnvironmentObject var sessionManager: SessionManager
     var body: some View {
         ScrollView(.vertical,showsIndicators: false){
             HStack{

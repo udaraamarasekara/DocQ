@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct NurseDocApointView: View {
+    @EnvironmentObject var sessionManager: SessionManager
     var body: some View {
         ScrollView(.vertical,showsIndicators: false){
             NursePatientCard()

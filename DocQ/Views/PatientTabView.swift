@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PatientTabView: View {
+    @EnvironmentObject var sessionManager: SessionManager
     var body: some View {
         TabView {
             PatientDashboardView()
@@ -22,11 +23,15 @@ struct PatientTabView: View {
                     Text("Search")
                 }
 
-            UserLoginView()
-                .tabItem {
-                    Image(systemName: "rectangle.portrait.and.arrow.right")
-                    Text("Logout")
-                }
+            if #available(iOS 16.0, *) {
+                UserLoginView()
+                    .tabItem {
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
+                        Text("Logout")
+                    }
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
 }

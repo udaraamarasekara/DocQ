@@ -8,38 +8,36 @@
 import SwiftUI
 
 struct DoctorDashboardView: View {
+    @EnvironmentObject var sessionManager: SessionManager
+    @ObservedObject var viewModel = DoctorDashboardViewModel()
     
-    @StateObject private var viewModel = DoctorDashboardViewModel()
+
     var body: some View {
-        VStack{
-            ScrollView(.vertical,showsIndicators: false){
-                HStack{
-                    Circle().fill(.yellow).frame(width:50,height:50).overlay(Text("A")                    .font(.system(size: 32, weight: .bold)) // Custom font size and weight
-                    ).padding()
-                    Text("User name").bold()
-                    
-                    Spacer()
-                    Button(action: {
-                        // Show notification when bell is tapped
-                        viewModel.sendNotification()
-                    }){
-                        Image(systemName: "rectangle.portrait.and.arrow.right")
-                            .font(.system(size: 24))
-                            .foregroundColor(.black)
+        ZStack{
+
+            VStack{
+                
+                ScrollView(.vertical,showsIndicators: false){
+                    HStack{
+                        Circle().fill(.yellow).frame(width:50,height:50).overlay(Text(String(sessionManager.name?.prefix(1) ?? "A"))                    .font(.system(size: 32, weight: .bold)) // Custom font size and weight
+                        ).padding()
+                        Text(sessionManager.name ?? "").bold()
                         
-                        
-                        if viewModel.notificationCount > 0 {
-                            Text("\(viewModel.notificationCount)")
-                                .font(.caption2)
-                                .foregroundColor(.white)
-                                .padding(5)
-                                .background(Circle().fill(Color.red))
-                                .offset(x: 10, y: -10)
+                        Spacer()
+                        Button(action: {
+                            // Show notification when bell is tapped
+                        }){
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                                .font(.system(size: 24))
+                                .foregroundColor(.black)
+                            
+                            
+                            
                         }
                     }.padding()}
                 
                 
-              
+                
                 VStack{
                     HStack{
                         Text("Working time").bold()
@@ -47,7 +45,7 @@ struct DoctorDashboardView: View {
                         Spacer()
                     }.padding(.leading)
                     HStack{
-                        Text(viewModel.getCurrentDateString()).foregroundColor(Color.gray)
+                        Text(viewModel.mySession?.date ?? "").foregroundColor(Color.gray)
                         Spacer()
                     }.padding(.leading)
                 }.padding()
@@ -66,7 +64,7 @@ struct DoctorDashboardView: View {
                     }.frame(width:150, height: 100).background(Color(red: 249/255, green: 249/255, blue: 249/255))
                         .cornerRadius(10).overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.green, lineWidth: 1)
+                                .stroke(viewModel.mySession?.status=="ongoing" ? Color.green:Color.gray, lineWidth: 1)
                         )
                     
                     VStack{
@@ -82,26 +80,45 @@ struct DoctorDashboardView: View {
                     }.frame(width:150, height: 100).background(Color(red: 249/255, green: 249/255, blue: 249/255))
                         .cornerRadius(10).overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.red, lineWidth: 1)
+                                .stroke(viewModel.mySession?.status=="finished" ? Color.red:Color.gray, lineWidth: 1)
                         )
                 }.padding()
-                CustomButton(title:"Check in") {
+                if viewModel.mySession?.status != "finished" {
                     
-                }.padding()
+                    
+                    CustomButton(title:viewModel.mySession?.status == "upcoming" ? "Check in":"check out") {
+                        if viewModel.mySession?.status == "upcoming" {
+                            viewModel.setAvailability(availability:"ongoing")
+                        }
+                        else{
+                            viewModel.setAvailability(availability:"finished")
+                        }
+                    }.padding()
+                }
                 HStack{
                     Text("Todays Patient Count ").bold()
                     
                     Spacer()
                 }.padding()
                 
+                List(viewModel.appointments) { appointment in
+                    
+                    PatientCard(appointment:appointment)
+                }
+            }.onAppear(){
+                sessionManager.name = UserDefaults.standard.string(forKey: "name")
+                sessionManager.role = UserDefaults.standard.string(forKey: "role")
+                sessionManager.token = UserDefaults.standard.string(forKey: "token")
                 
-                PatientCard()
+                viewModel.fetchMySession()
+                viewModel.myAppointments()
             }}
-        .onAppear {
-            // Set the delegate for handling notifications in the foreground
-            
-        }}      }
+        
+        NextSessionPopup(isPresented:$viewModel.isShowPopup ,  title: "You Checked out", message: "Load next session?",onDismiss:{viewModel.isShowPopup = false;viewModel.mySession?.status="finished"}, onOk: {viewModel.fetchMySession()})
+        // Set the delegate for handling notifications in the foreground
+    }
+        }
 
-#Preview {
-    DoctorDashboardView()
-}
+//#Preview {
+//    DoctorDashboardView()
+//}

@@ -10,7 +10,7 @@ import SwiftUI
 struct PatientClinicsView: View {
     @State private var description=""
       let lineLimit=3
-
+    @EnvironmentObject var sessionManager: SessionManager
       @State private var expanded = false
     let rows = [
         GridItem(.fixed(50),spacing:33),

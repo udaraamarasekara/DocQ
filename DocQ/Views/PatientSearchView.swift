@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PatientSearchView: View {
+    
+    @EnvironmentObject var sessionManager: SessionManager
     enum Tab {
            case doctors
            case clinics

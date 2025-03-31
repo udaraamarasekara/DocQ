@@ -6,12 +6,16 @@
 //
 
 import Foundation;
-import SwiftUICore
+import SwiftUI
 
+@available(iOS 16.0, *)
 class AuthViewModel:ObservableObject {
-    @EnvironmentObject var sessionManager: SessionManager  // Access the session object
     @Published var message: String = ""
+    @Published var path = NavigationPath()
+
       @Published var isError: Bool = false
+ 
+    
     func register(username:String,email:String,password:String) {
         guard let url = URL(string: "\(API.baseURL)register") else { return }
         
@@ -69,7 +73,7 @@ class AuthViewModel:ObservableObject {
                             }
                         } else {
                             DispatchQueue.main.async {
-                                self.message = "Error response parsing error"
+                                self.message = "Invalid Credintials!"
                                 self.isError = true
                             }
                         }
@@ -81,7 +85,72 @@ class AuthViewModel:ObservableObject {
 
     }
     func login (email:String,password:String) {
-        sessionManager.userRole = "patient"  // Set user role to patient
+        guard let url = URL(string: "\(API.baseURL)login") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let body: [String: Any] = [
+            "email": email,
+            "password": password
+        ]
+        
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                DispatchQueue.main.async {
+                   
+                    self.isError = true
+                }
+                return
+            }
+            
+            do {
+               
+
+                
+                if let httpResponse = response as? HTTPURLResponse {
+                    if httpResponse.statusCode == 200 {
+                        // Try to decode success response
+                        if let successResponse = try? JSONDecoder().decode(LoginResponse.self, from: data) {
+                            DispatchQueue.main.async {
+                                UserDefaults.standard.set(successResponse.name, forKey: "name")
+                                UserDefaults.standard.set(successResponse.role, forKey: "role")
+                                UserDefaults.standard.set(successResponse.token, forKey: "token")
+                                self.path.append(successResponse.role)
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self.message = "Success response parsing error"
+                                self.isError = true
+                            }
+                        }
+                    } else {
+                        
+                        if let responseString = String(data: data, encoding: .utf8) {
+                            print("Error response data: \(responseString)")  // Log the error response
+                        }
+
+                        // Try to decode error response
+                        if let errorResponse = try? JSONDecoder().decode(ErrorResponse.self, from: data) {
+                            DispatchQueue.main.async {
+                                self.message = errorResponse.error
+                                self.isError = true
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self.message = "Invalid Crediantials!"
+                                self.isError = true
+                            }
+                        }
+                    }
+                }
+
+            }
+        }.resume()
 
     }
 }

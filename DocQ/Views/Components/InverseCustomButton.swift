@@ -23,6 +23,8 @@ struct InverseCustomButton: View {
                 .cornerRadius(10)
         }
         .buttonStyle(PlainButtonStyle()) // Removes default tap effect spacing
+        .padding(.horizontal) //  Use this instead of .frame
+
         .overlay(
             RoundedRectangle(cornerRadius: 10) // Slightly adjusted cornerRadius
                 .stroke(foregroundColor, lineWidth: 1)
