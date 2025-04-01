@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct BookDocCard: View {
+    var session: DoctorSessionResponse?
     let imageUrl = URL(string: "https://picsum.photos/400/300")
     var body: some View {
         

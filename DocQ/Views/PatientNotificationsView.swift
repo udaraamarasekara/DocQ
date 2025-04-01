@@ -5,9 +5,10 @@
 //  Created by udara prabath on 2025-03-26.
 import SwiftUI
 
+@available(iOS 16.0, *)
 struct PatientNotificationsView: View {
     @EnvironmentObject var sessionManager: SessionManager
-    
+    @Binding var path:NavigationPath
     var body: some View {
         HStack{
             Image(systemName: "arrow.left")
@@ -24,6 +25,4 @@ struct PatientNotificationsView: View {
 }
 
 
-#Preview {
-    PatientNotificationsView()
-}
+

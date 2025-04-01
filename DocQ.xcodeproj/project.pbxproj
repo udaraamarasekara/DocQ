@@ -18,7 +18,6 @@
 		6876071C2D94189200287AD9 /* PatientNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876071B2D94189200287AD9 /* PatientNotificationsView.swift */; };
 		687A21DE2D93C1C1006021CF /* PatientDateSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A21DD2D93C1C1006021CF /* PatientDateSelectorView.swift */; };
 		687A21E22D93C8D4006021CF /* PatientBookDocViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A21E12D93C8D4006021CF /* PatientBookDocViewModel.swift */; };
-		687A21E42D93CE64006021CF /* PatientTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A21E32D93CE64006021CF /* PatientTabView.swift */; };
 		687A21E82D93D828006021CF /* DoctorDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A21E72D93D828006021CF /* DoctorDashboardView.swift */; };
 		6881AAC92D9039F9002B015F /* DocQApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6881AAC82D9039F9002B015F /* DocQApp.swift */; };
 		6881AACB2D9039F9002B015F /* UserRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6881AACA2D9039F9002B015F /* UserRegistrationView.swift */; };
@@ -32,7 +31,6 @@
 		6895D1332D91B78F0091E34D /* PatientDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6895D1322D91B78F0091E34D /* PatientDashboardView.swift */; };
 		6895D1352D91B8180091E34D /* PatientDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6895D1342D91B8100091E34D /* PatientDashboardViewModel.swift */; };
 		68A79B302D9921CC0034DFA3 /* DataModals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A79B2F2D9921BE0034DFA3 /* DataModals.swift */; };
-		68A79B332D9A94DF0034DFA3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A79B322D9A94D80034DFA3 /* CoreDataManager.swift */; };
 		68E5CBCD2D914B5200F7F6E0 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5CBCC2D914B4900F7F6E0 /* AuthViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +63,6 @@
 		6876071B2D94189200287AD9 /* PatientNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientNotificationsView.swift; sourceTree = "<group>"; };
 		687A21DD2D93C1C1006021CF /* PatientDateSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDateSelectorView.swift; sourceTree = "<group>"; };
 		687A21E12D93C8D4006021CF /* PatientBookDocViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientBookDocViewModel.swift; sourceTree = "<group>"; };
-		687A21E32D93CE64006021CF /* PatientTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientTabView.swift; sourceTree = "<group>"; };
 		687A21E72D93D828006021CF /* DoctorDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorDashboardView.swift; sourceTree = "<group>"; };
 		6881AAC52D9039F9002B015F /* DocQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6881AAC82D9039F9002B015F /* DocQApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocQApp.swift; sourceTree = "<group>"; };
@@ -83,7 +80,6 @@
 		6895D1322D91B78F0091E34D /* PatientDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDashboardView.swift; sourceTree = "<group>"; };
 		6895D1342D91B8100091E34D /* PatientDashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDashboardViewModel.swift; sourceTree = "<group>"; };
 		68A79B2F2D9921BE0034DFA3 /* DataModals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModals.swift; sourceTree = "<group>"; };
-		68A79B322D9A94D80034DFA3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		68E5CBCC2D914B4900F7F6E0 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,7 +135,6 @@
 		6881AAC72D9039F9002B015F /* DocQ */ = {
 			isa = PBXGroup;
 			children = (
-				68A79B322D9A94D80034DFA3 /* CoreDataManager.swift */,
 				6881AAF52D903C56002B015F /* ViewModels */,
 				6881AAF42D903C40002B015F /* Models */,
 				6881AAF32D903BE7002B015F /* Views */,
@@ -184,7 +179,6 @@
 				687607072D94111200287AD9 /* NurseDocApointView.swift */,
 				687A21E72D93D828006021CF /* DoctorDashboardView.swift */,
 				687607022D940E5C00287AD9 /* NurseDashboardView.swift */,
-				687A21E32D93CE64006021CF /* PatientTabView.swift */,
 				687A21DD2D93C1C1006021CF /* PatientDateSelectorView.swift */,
 				6846CFFB2D92F05F006EB454 /* PatientBookDocView.swift */,
 				68877CAE2D92B00E00FC24A2 /* PatientClinicsView.swift */,
@@ -352,12 +346,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				687A21E22D93C8D4006021CF /* PatientBookDocViewModel.swift in Sources */,
-				687A21E42D93CE64006021CF /* PatientTabView.swift in Sources */,
 				687A21DE2D93C1C1006021CF /* PatientDateSelectorView.swift in Sources */,
 				6876071C2D94189200287AD9 /* PatientNotificationsView.swift in Sources */,
 				6846CFFC2D92F05F006EB454 /* PatientBookDocView.swift in Sources */,
 				68E5CBCD2D914B5200F7F6E0 /* AuthViewModel.swift in Sources */,
-				68A79B332D9A94DF0034DFA3 /* CoreDataManager.swift in Sources */,
 				6895D1232D91A3F60091E34D /* UserLoginView.swift in Sources */,
 				68001A032D96BAF400A2EB32 /* Responses.swift in Sources */,
 				68001A052D96BEA800A2EB32 /* Api.swift in Sources */,

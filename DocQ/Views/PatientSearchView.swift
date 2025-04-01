@@ -70,7 +70,7 @@ struct PatientSearchView: View {
                 VStack{
                     HStack{
                         ScrollView(.horizontal, showsIndicators: false) {
-                            DoctorCard()
+//                            DoctorCard()
                             
                         }
                     }.padding()}

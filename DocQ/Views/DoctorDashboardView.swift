@@ -7,14 +7,15 @@
 
 import SwiftUI
 
+@available(iOS 16.0, *)
 struct DoctorDashboardView: View {
     @EnvironmentObject var sessionManager: SessionManager
     @ObservedObject var viewModel = DoctorDashboardViewModel()
-    
+    @Binding var path:NavigationPath
 
     var body: some View {
         ZStack{
-
+            
             VStack{
                 
                 ScrollView(.vertical,showsIndicators: false){
@@ -57,7 +58,7 @@ struct DoctorDashboardView: View {
                             Spacer()
                         }.padding()
                         HStack{
-                            Text("11.00 ").font(.system(size: 22, weight: .bold)).foregroundColor(Color.gray)
+                            Text(viewModel.inAt).font(.system(size: 22, weight: .bold)).foregroundColor(Color.gray)
                             Spacer()
                         }.padding(.bottom).padding(.leading)
                         Spacer()
@@ -73,7 +74,7 @@ struct DoctorDashboardView: View {
                             Spacer()
                         }.padding()
                         HStack{
-                            Text("11.00 ").font(.system(size: 22, weight: .bold)).foregroundColor(Color.gray)
+                            Text(viewModel.outAt).font(.system(size: 22, weight: .bold)).foregroundColor(Color.gray)
                             Spacer()
                         }.padding(.bottom).padding(.leading)
                         Spacer()
@@ -112,11 +113,13 @@ struct DoctorDashboardView: View {
                 
                 viewModel.fetchMySession()
                 viewModel.myAppointments()
-            }}
+            }
+            NextSessionPopup(isPresented:$viewModel.isShowPopup ,  title: "You Checked out", message: "Load next session?",onDismiss:{viewModel.isShowPopup = false;viewModel.mySession?.status="finished"}, onOk: {viewModel.fetchMySession()})
+            // Set the delegate for handling notifications in the foreground
+     
+        }
         
-        NextSessionPopup(isPresented:$viewModel.isShowPopup ,  title: "You Checked out", message: "Load next session?",onDismiss:{viewModel.isShowPopup = false;viewModel.mySession?.status="finished"}, onOk: {viewModel.fetchMySession()})
-        // Set the delegate for handling notifications in the foreground
-    }
+           }
         }
 
 //#Preview {

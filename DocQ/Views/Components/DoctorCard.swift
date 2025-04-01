@@ -8,7 +8,17 @@
 import SwiftUI
 
 struct DoctorCard: View {
-    let imageUrl = URL(string: "https://picsum.photos/400/300")
+    private var doctor:DoctorResponse?
+    var imageUrl: URL? {
+        URL(string: "\(Api.imgURL)\(doctor?.image ?? "")")
+    }
+
+    init(doctor:DoctorResponse)
+    {
+       
+
+        self.doctor = doctor
+    }
     var body: some View {
         HStack{
             if #available(iOS 15.0, *) {
@@ -26,9 +36,8 @@ struct DoctorCard: View {
                 // Fallback on earlier versions
             }
             VStack{
-                Text("Doctor Name").bold().padding().frame(width:180,alignment: .leading)
-                Text("Category").padding(.leading).frame(width:180,alignment: .leading)
-                Text("Clinic").padding(.leading).frame(width:180,alignment: .leading)
+                Text(doctor?.name ?? "").bold().padding().frame(width:180,alignment: .leading)
+                Text(doctor?.category ?? "").padding(.leading).frame(width:180,alignment: .leading)
             }
         }.frame(width:300).padding()
             .overlay(
@@ -38,6 +47,4 @@ struct DoctorCard: View {
     }
 }
 
-#Preview {
-    DoctorCard()
-}
+

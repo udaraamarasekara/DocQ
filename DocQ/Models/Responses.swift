@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct SuccessResponse: Decodable {
+struct SuccessResponse: Codable {
     let success: String
 }
 
-struct ErrorResponse: Decodable {
+struct ErrorResponse: Codable {
     let error: String
 }
-struct LoginResponse: Decodable {
+struct LoginResponse:Codable {
     let name: String
     let token: String
     let role: String
@@ -25,8 +25,8 @@ struct LoginResponse: Decodable {
 struct SessionResponse: Codable {
     // Define the properties based on the JSON response structure
     var id:Int
-    var clinic: String
     var date: String
+    var clinic: String
     var status: String
 }
 
@@ -36,4 +36,27 @@ struct AppointmentResponse: Codable,Identifiable {
     var name: String
     var token: String
     var status: String
+}
+
+struct ClinicResponse: Codable,Identifiable {
+    var id:Int
+    var name: String
+    var image: String
+}
+struct CategoryResponse: Codable,Identifiable,Hashable {
+    var id:Int
+    var name: String
+}
+struct DoctorResponse: Codable,Identifiable,Hashable {
+    var id:Int
+    var name: String
+    var category:String
+    var image: String
+}
+struct DoctorSessionResponse: Codable,Identifiable {
+    var id:Int
+    var name: String
+    var status:String
+    var date:String
+    var image: String
 }

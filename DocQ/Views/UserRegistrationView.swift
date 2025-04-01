@@ -12,12 +12,11 @@ struct UserRegistrationView: View {
     @State private var username: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
-
+    @Binding var path:NavigationPath
     @StateObject private var viewModel = AuthViewModel()
     @State private var showDetail = false
 
     var body: some View {
-        NavigationStack {
             VStack {
                 if !viewModel.message.isEmpty {
                     Text(viewModel.message)
@@ -47,16 +46,15 @@ struct UserRegistrationView: View {
 
                 HStack {
                     Text("Do you have an account?").opacity(0.5)
-                    Button("Sign In") { showDetail = true }
+                    Button("Sign In") {  path.append("userLogin") }
                         .bold()
                         .foregroundColor(Color("MainColor"))
                 }
 
-                NavigationLink("", destination: UserLoginView(), isActive: $showDetail)
-                    .hidden()
+               
             }
             .padding()
-        }
-        
     }
+        
+    
 }

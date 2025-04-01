@@ -11,13 +11,14 @@ import SwiftUI
 @available(iOS 16.0, *)
 class AuthViewModel:ObservableObject {
     @Published var message: String = ""
-    @Published var path = NavigationPath()
+    
+    @Published var role: String = ""
 
       @Published var isError: Bool = false
  
-    
+   
     func register(username:String,email:String,password:String) {
-        guard let url = URL(string: "\(API.baseURL)register") else { return }
+        guard let url = URL(string: "\(Api.baseURL)register") else { return }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -85,7 +86,7 @@ class AuthViewModel:ObservableObject {
 
     }
     func login (email:String,password:String) {
-        guard let url = URL(string: "\(API.baseURL)login") else { return }
+        guard let url = URL(string: "\(Api.baseURL)login") else { return }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -120,7 +121,7 @@ class AuthViewModel:ObservableObject {
                                 UserDefaults.standard.set(successResponse.name, forKey: "name")
                                 UserDefaults.standard.set(successResponse.role, forKey: "role")
                                 UserDefaults.standard.set(successResponse.token, forKey: "token")
-                                self.path.append(successResponse.role)
+                                self.role = successResponse.role 
                             }
                         } else {
                             DispatchQueue.main.async {

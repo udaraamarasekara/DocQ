@@ -8,7 +8,17 @@
 import SwiftUI
 
 struct ClinicCard: View {
-    let imageUrl = URL(string: "https://picsum.photos/400/300")
+    private var clinic:ClinicResponse?
+    var imageUrl: URL? {
+        URL(string: "\(Api.imgURL)\(clinic?.image ?? "")")
+    }
+
+    init(clinic:ClinicResponse)
+    {
+       
+
+        self.clinic = clinic
+    }
     var body: some View {
         VStack{
             if #available(iOS 15.0, *) {
@@ -26,7 +36,7 @@ struct ClinicCard: View {
                 // Fallback on earlier versions
             }
             HStack{
-                Text("Hospital Name").padding().frame(width:200,alignment: .leading)
+                Text(clinic?.name ?? "").padding().frame(width:200,alignment: .leading)
                 
             }
         }
@@ -37,6 +47,4 @@ struct ClinicCard: View {
     }
 }
 
-#Preview {
-    ClinicCard()
-}
+

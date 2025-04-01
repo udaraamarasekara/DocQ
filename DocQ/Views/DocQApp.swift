@@ -11,21 +11,39 @@ import SwiftUI
 @main
 struct DocQApp: App {
     @StateObject var sessionManager = SessionManager()
-    @State  var navigationPath = NavigationPath()
+    @State var path:NavigationPath = NavigationPath()
+
     var body: some Scene {
         
         // Access the session object
         
 
         WindowGroup {
-            ZStack {
-                Color.white
-                    .ignoresSafeArea()
-                NavigationStack(path: $navigationPath) {
-                    
-                    UserRegistrationView()
-                }
-            }.environmentObject(sessionManager)
+            NavigationStack(path:$path) {
+
+           
+                UserRegistrationView(path:$path)
+                
+                    .navigationDestination(for: String.self) { route in
+                        switch route {
+                        case "doctor":
+                            DoctorDashboardView(path:$path)
+                            //                case "nurse":
+                            //                    NurseDashboardView()
+                        case "patient":
+                            PatientDashboardView(path:$path)
+                        case "userLogin":
+                            UserLoginView(path:$path)
+                        default:
+                            Text("Unknown Route")
+                        }
+                    }.navigationDestination(for: DocId.self){docId in
+                        PatientBookDocView(doctorId:docId.id, path:$path)
+
+                            }
+            
+            }            .environmentObject(sessionManager)
+
         }
     }
 }

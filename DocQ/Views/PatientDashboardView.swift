@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 16.0, *)
 struct PatientDashboardView: View {
     @EnvironmentObject var sessionManager: SessionManager
     @StateObject private var viewModel = PatientDashboardViewModel()
@@ -14,20 +15,19 @@ struct PatientDashboardView: View {
         GridItem(.fixed(50),spacing:33),
         GridItem(.fixed(50),spacing :33)
     ]
-    
+    @Binding var path: NavigationPath
     
     var body: some View {
-        VStack{
+              VStack{
             ScrollView(.vertical,showsIndicators: false){
                 HStack{
-                    Circle().fill(.yellow).frame(width:50,height:50).overlay(Text("A")                    .font(.system(size: 32, weight: .bold)) // Custom font size and weight
+                    Circle().fill(.yellow).frame(width:50,height:50).overlay(Text(String(sessionManager.name?.prefix(1) ?? "A"))                    .font(.system(size: 32, weight: .bold)) // Custom font size and weight
                     ).padding()
-                    Text("User name").bold()
+                    Text(sessionManager.name ?? "").bold()
                     
                     Spacer()
                     Button(action: {
                         // Show notification when bell is tapped
-                        viewModel.sendNotification()
                     }){
                         Image(systemName: "bell.fill")
                             .font(.system(size: 24))
@@ -44,16 +44,16 @@ struct PatientDashboardView: View {
                         }
                     }.padding()}
                 LazyHGrid(rows: rows, spacing: 16) {
-                    ForEach(1...8, id: \.self) { i in
+                    ForEach(viewModel.categories, id: \.self){ category in
                         VStack
                         {
-                            Text("(i)")
+                            Text(String(category.id))
                                 .frame(width: 50,height: 50)
                             
                                 .background(Color.green)
                                 .cornerRadius(10)
                                 .foregroundColor(.white)
-                            Text("Category").bold()
+                            Text(category.name).bold()
                         }
                     }
                 }
@@ -73,8 +73,11 @@ struct PatientDashboardView: View {
                 
                 HStack{
                     ScrollView(.horizontal, showsIndicators: false) {
-                        ClinicCard()
-                        
+                        HStack{
+                            ForEach(viewModel.clinics, id: \.id) { clinic in
+                                ClinicCard(clinic: clinic)
+                            }
+                        }
                     }
                 }.padding()
                 
@@ -87,18 +90,32 @@ struct PatientDashboardView: View {
                 
                 HStack{
                     ScrollView(.horizontal, showsIndicators: false) {
-                        DoctorCard()
-                        
+                        HStack{
+                            ForEach(viewModel.doctors, id: \.id) { doctor in
+                                Button(action:{
+                                    path.append(DocId(id: doctor.id))
+                                }){
+                                    DoctorCard(doctor: doctor)
+                                }.buttonStyle(PlainButtonStyle())
+                            }
+                        }
                     }
                 }.padding()
             }}
         .onAppear {
-                  // Set the delegate for handling notifications in the foreground
-            UNUserNotificationCenter.current().delegate = viewModel 
-              }
+            
+            sessionManager.name = UserDefaults.standard.string(forKey: "name")
+            sessionManager.role = UserDefaults.standard.string(forKey: "role")
+            sessionManager.token = UserDefaults.standard.string(forKey: "token")
+            viewModel.fetchClinics()
+            viewModel.fetchCategories()
+            viewModel.fetchDoctors()
+            // Set the delegate for handling notifications in the foreground
+        }
+        }
     }
-}
 
-#Preview {
-    PatientDashboardView()
-}
+
+//#Preview {
+//    PatientDashboardView()
+//}

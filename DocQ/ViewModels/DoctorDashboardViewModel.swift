@@ -25,26 +25,16 @@ class DoctorDashboardViewModel:ObservableObject {
     @Published var inAt = ""
     @Published var outAt = ""
     @Published var isShowPopup=false
-    let context = CoreDataManager.shared.context
-
-    func ifInOutHas(by id: UUID) -> InOutAt? {
-        let request = NSFetchRequest<InOutAt>(entityName: "InOutAt")
-        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
-        request.fetchLimit = 1 // Ensures only one object is returned
-
-        do {
-            return try context.fetch(request).first
-        } catch {
-            print("Error fetching appointment: \(error.localizedDescription)")
-            return nil
-        }
-    }
 
     
+
+
+   
+
     
     func setAvailability(availability:String) {
         let sessionId = mySession?.id ?? 0
-        guard let url = URL(string: "\(API.baseURL)setSessionAvailability/\(sessionId)") else { return }
+        guard let url = URL(string: "\(Api.baseURL)setSessionAvailability/\(sessionId)") else { return }
         
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
@@ -80,7 +70,9 @@ class DoctorDashboardViewModel:ObservableObject {
                         // Try to decode success response
                         if (try? JSONDecoder().decode(SuccessResponse.self, from: data)) != nil {print("ok")
                             DispatchQueue.main.async {
-                                if self.mySession?.status=="ongoing" { self.isShowPopup = true}else{
+                                if self.mySession?.status=="ongoing" { self.isShowPopup = true
+                                    
+                                }else{
                                     self.fetchMySession()
                                 }
                             }
@@ -116,7 +108,7 @@ class DoctorDashboardViewModel:ObservableObject {
     
     func myAppointments() {
         let session = mySession?.id ?? 0
-        guard let url = URL(string: "\(API.baseURL)appointments/\(session)") else {
+        guard let url = URL(string: "\(Api.baseURL)appointments/\(session)") else {
             print("Invalid URL")
             return
         }
@@ -173,7 +165,7 @@ class DoctorDashboardViewModel:ObservableObject {
         }.resume()
     }
     func fetchMySession() {
-        guard let url = URL(string: "\(API.baseURL)mySession") else {
+        guard let url = URL(string: "\(Api.baseURL)mySession") else {
             print("Invalid URL")
             return
         }
@@ -232,9 +224,7 @@ class DoctorDashboardViewModel:ObservableObject {
                         // Update the session information
                         self.mySession = successResponse
                         self.isLoading = false
-                        if ((self.mySession?.status) != "upcoming"){
-                            
-                        }
+                       
                     }
                 } catch {
                     DispatchQueue.main.async {

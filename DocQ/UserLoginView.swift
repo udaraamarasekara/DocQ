@@ -4,12 +4,12 @@ import SwiftUI
 struct UserLoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
-    
+    @Binding var path: NavigationPath  // Receive path for navigation
+
     @StateObject private var viewModel = AuthViewModel()
     @EnvironmentObject var sessionManager: SessionManager
 
     var body: some View {
-        NavigationStack(path: $viewModel.path) {
             VStack {
                 if !viewModel.message.isEmpty {
                     Text(viewModel.message)
@@ -27,23 +27,13 @@ struct UserLoginView: View {
 
                 CustomButton(title: "Login") {
                     viewModel.login(email: email, password: password)
-                }
+                }.onChange(of:viewModel.role){role in path.append(role)}
+
                 .padding(.top)
                 .padding(.horizontal)
             }
             .padding()
-            .navigationDestination(for: String.self) { route in
-                switch route {
-                case "doctor":
-                    DoctorDashboardView()
-//                case "nurse":
-//                    NurseDashboardView()
-                case "patient":
-                    PatientTabView()
-                default:
-                    Text("Unknown Route")
-                }
-            }
-        }
+        
+        
     }
 }

@@ -9,33 +9,184 @@ import Foundation;
 import Combine;
 import UserNotifications
 class PatientDashboardViewModel:NSObject,UNUserNotificationCenterDelegate,ObservableObject{
-    @Published var notificationCount: Int = 0
+      @Published var notificationCount: Int = 0
        @Published var isLoading = false
-//    func fetchClinics() {
-//            guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
-//
-//            isLoading = true
-//
-//        URLSession.shared.dataTask(with: url) { data, response, error in
-//            DispatchQueue.main.async {
-//                self.isLoading = false
-//            }
-//            
-//            if let data = data {
-//                do {
-//                    let decodedPosts = try JSONDecoder().decode([ClinicModel].self, from: data)
-//                    DispatchQueue.main.async {
-//                        self.clinics = decodedPosts
-//                    }
-//                } catch {
-//                    print("Error decoding posts: \(error)")
-//                }
-//            } else if let error = error {
-//                print("Error fetching posts: \(error)")
-//            }
-//         }.resume()
-//        }
-//    
+    @Published var clinics: [ClinicResponse] = []
+    @Published var categories: [CategoryResponse] = []
+    @Published var doctors: [DoctorResponse] = []
+    func fetchClinics() {
+        guard let url = URL(string: "\(Api.baseURL)allClinics") else {
+            print("Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        guard let token = UserDefaults.standard.string(forKey: "token") else {
+            print("Token is missing")
+            return
+        }
+        
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
+
+            // Handle network errors
+            if let error = error {
+                print("Network error: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = data else {
+                print("No data received from the server")
+                return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("Invalid response")
+                return
+            }
+
+            if httpResponse.statusCode == 200 {
+                do {
+                    let decodedResponse = try JSONDecoder().decode([ClinicResponse].self, from: data)
+                    DispatchQueue.main.async {
+                        self.clinics = decodedResponse
+                        print(self.clinics)
+                    }
+                } catch {
+                    print("Decoding error: \(error.localizedDescription)")
+                }
+            } else {
+                print("Received non-200 response: \(httpResponse.statusCode)")
+            }
+        }.resume()
+    }
+    func fetchDoctors() {
+        guard let url = URL(string: "\(Api.baseURL)allDoctors") else {
+            print("Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        guard let token = UserDefaults.standard.string(forKey: "token") else {
+            print("Token is missing")
+            return
+        }
+        
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
+
+            // Handle network errors
+            if let error = error {
+                print("Network error: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = data else {
+                print("No data received from the server")
+                return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("Invalid response")
+                return
+            }
+
+            if httpResponse.statusCode == 200 {
+                do {
+                    let decodedResponse = try JSONDecoder().decode([DoctorResponse].self, from: data)
+                    DispatchQueue.main.async {
+                        self.doctors = decodedResponse
+                    }
+                } catch {
+                    print("Decoding error: \(error.localizedDescription)")
+                }
+            } else {
+                print("Received non-200 response: \(httpResponse.statusCode)")
+            }
+        }.resume()
+    }
+    
+    func fetchCategories() {
+        guard let url = URL(string: "\(Api.baseURL)categories") else {
+            print("Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        guard let token = UserDefaults.standard.string(forKey: "token") else {
+            print("Token is missing")
+            return
+        }
+        
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
+
+            // Handle network errors
+            if let error = error {
+                print("Network error: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = data else {
+                print("No data received from the server")
+                return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("Invalid response")
+                return
+            }
+
+            if httpResponse.statusCode == 200 {
+                do {
+                    let decodedResponse = try JSONDecoder().decode([CategoryResponse].self, from: data)
+                    DispatchQueue.main.async {
+                        self.categories = decodedResponse
+                    }
+                } catch {
+                    print("Decoding error: \(error.localizedDescription)")
+                }
+            } else {
+                print("Received non-200 response: \(httpResponse.statusCode)")
+            }
+        }.resume()
+    }
     func requestNotificationPermission(completion: @escaping (Bool) -> Void) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
