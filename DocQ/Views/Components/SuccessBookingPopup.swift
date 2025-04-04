@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SuccessBookingPopup: View {
+
     @Binding var isPresented: Bool
     var title: String
     var message: String
@@ -15,34 +16,45 @@ struct SuccessBookingPopup: View {
 
     var body: some View {
         if isPresented {
+            GeometryReader { geometry in
+
             ZStack {
-                // Dimmed background
+                // Full-screen dimmed background
                 Color.black.opacity(0.4)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         dismiss()
-                    }
+                    }.frame(width:geometry.size.width,height:geometry.size.height)
 
-                // Popup content
-                VStack(spacing: 16) {
-                 
-                    Image("SuccessIcon")
-                    Text(title)
-                        .font(.headline)
-                        .padding(.top)
-                    Text(message)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
+                // Popup content centered using GeometryReader
+                    VStack(spacing: 16) {
+                        Image("SuccessIcon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 80, height: 80)
 
-                    CustomButton(title:"OK") {
-                        dismiss()
+                        Text(title)
+                            .font(.title)
+                            .bold()
+                            .padding(.top)
+
+                        Text(message)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                            .frame(maxWidth: geometry.size.width * 0.8)
+
+                        CustomButton(title: "OK") {
+                            dismiss()
+                        }
+                        .frame(width: geometry.size.width * 0.6, height: 50)
                     }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(20)
+                    .shadow(radius: 10)
+                    .frame(width: geometry.size.width * 0.85) // Adjust width relative to screen size
+                    .position(x: geometry.size.width / 2, y: geometry.size.height / 2) // Centering
                 }
-                .padding()
-                .background(Color.white)
-                .cornerRadius(16)
-                .shadow(radius: 20)
-                .padding(.horizontal, 40)
             }
             .transition(.opacity)
             .animation(.easeInOut, value: isPresented)
@@ -54,6 +66,3 @@ struct SuccessBookingPopup: View {
         onDismiss?()
     }
 }
-
-
-

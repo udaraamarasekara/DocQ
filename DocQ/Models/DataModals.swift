@@ -12,6 +12,4 @@ class SessionManager: ObservableObject {
     @Published var token: String? = nil
 }
 
-struct DocId: Codable,Hashable {
-    var id: Int
-}
+

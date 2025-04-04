@@ -75,7 +75,12 @@ struct PatientDashboardView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack{
                             ForEach(viewModel.clinics, id: \.id) { clinic in
+                                Button(action:{
+                                    path.append(Route.detailsView(clinic))
+                                }){
                                 ClinicCard(clinic: clinic)
+                                }.buttonStyle(PlainButtonStyle())
+
                             }
                         }
                     }
@@ -93,7 +98,7 @@ struct PatientDashboardView: View {
                         HStack{
                             ForEach(viewModel.doctors, id: \.id) { doctor in
                                 Button(action:{
-                                    path.append(DocId(id: doctor.id))
+                                    path.append(doctor)
                                 }){
                                     DoctorCard(doctor: doctor)
                                 }.buttonStyle(PlainButtonStyle())

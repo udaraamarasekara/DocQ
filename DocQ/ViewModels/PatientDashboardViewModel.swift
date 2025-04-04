@@ -9,8 +9,8 @@ import Foundation;
 import Combine;
 import UserNotifications
 class PatientDashboardViewModel:NSObject,UNUserNotificationCenterDelegate,ObservableObject{
-      @Published var notificationCount: Int = 0
-       @Published var isLoading = false
+    @Published var notificationCount: Int = 0
+    @Published var isLoading = false
     @Published var clinics: [ClinicResponse] = []
     @Published var categories: [CategoryResponse] = []
     @Published var doctors: [DoctorResponse] = []

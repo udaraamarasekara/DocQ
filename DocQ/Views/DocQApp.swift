@@ -37,9 +37,20 @@ struct DocQApp: App {
                         default:
                             Text("Unknown Route")
                         }
-                    }.navigationDestination(for: DocId.self){docId in
-                        PatientBookDocView(doctorId:docId.id, path:$path)
+                    }.navigationDestination(for: DoctorResponse.self){doc in
 
+                        PatientBookDocView(doctor:doc, path:$path)
+
+                            }
+                
+                    .navigationDestination(for: Route.self){route in
+
+                        switch route {
+                                   case .detailsView(let ClinicResponse):
+                            PatientClinicsView(clinic:ClinicResponse, path:$path)
+                                   case .bookingView(let ClinicResponse):
+                            PatientBookClinicView(clinic: ClinicResponse,path:$path)
+                                   }
                             }
             
             }            .environmentObject(sessionManager)

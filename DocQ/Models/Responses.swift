@@ -21,7 +21,9 @@ struct LoginResponse:Codable {
     let role: String
 }
 
-
+struct AppointmentTokenResponse:Codable {
+    let token: String
+}
 struct SessionResponse: Codable {
     // Define the properties based on the JSON response structure
     var id:Int
@@ -38,10 +40,11 @@ struct AppointmentResponse: Codable,Identifiable {
     var status: String
 }
 
-struct ClinicResponse: Codable,Identifiable {
+struct ClinicResponse: Codable,Identifiable,Hashable {
     var id:Int
     var name: String
     var image: String
+    var description : String
 }
 struct CategoryResponse: Codable,Identifiable,Hashable {
     var id:Int
@@ -53,10 +56,11 @@ struct DoctorResponse: Codable,Identifiable,Hashable {
     var category:String
     var image: String
 }
-struct DoctorSessionResponse: Codable,Identifiable {
+struct DoctorOrClinicSessionResponse: Codable,Identifiable,Hashable {
     var id:Int
     var name: String
     var status:String
     var date:String
     var image: String
+    var  is_booked:Bool
 }
