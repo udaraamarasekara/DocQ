@@ -16,7 +16,7 @@ class AuthViewModel:ObservableObject {
 
       @Published var isError: Bool = false
  
-   
+    @Published var isLoggedOut:Bool = false
     func register(username:String,email:String,password:String) {
         guard let url = URL(string: "\(Api.baseURL)register") else { return }
         
@@ -154,4 +154,6 @@ class AuthViewModel:ObservableObject {
         }.resume()
 
     }
+    
+    
 }

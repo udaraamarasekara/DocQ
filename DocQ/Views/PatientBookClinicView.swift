@@ -11,7 +11,6 @@ import SwiftUI
 struct PatientBookClinicView: View {
     @StateObject var viewModel: PatientBookSessionViewModel
     @State var isShowPopup: Bool = false
-    @State var tokenCurnt :String = ""
     @State var clinic :ClinicResponse!
     init(clinic:ClinicResponse,path:Binding<NavigationPath>){
         self.clinic = clinic
@@ -25,11 +24,15 @@ struct PatientBookClinicView: View {
             Text("Available Sessions of Clinic \(clinic.name)")  .font(.system(size: 19, weight: .bold)).padding()
         
             ScrollView(.vertical,showsIndicators: false){
-                ForEach($viewModel.sessions, id: \.self){ session in
-                    BookSessionCard(session:session, isShowPopup: $isShowPopup)
+                if #available(iOS 17.0, *) {
+                    ForEach($viewModel.sessions, id: \.self){ session in
+                        BookSessionCard(session:session, isShowPopup: $isShowPopup,token:$viewModel.tokenCurnt)
+                    }
+                } else {
+                    // Fallback on earlier versions
                 }
             }}
-            SuccessBookingPopup(isPresented:$isShowPopup, title:"Booking Placed!", message:"Your token is:\(tokenCurnt)",onDismiss:{viewModel.fetchSessions()})
+            SuccessBookingPopup(isPresented:$isShowPopup, title:"Booking Placed!", message:"Your token is:\(viewModel.tokenCurnt)",onDismiss:{viewModel.fetchSessions()})
     }
         .onAppear(){
             viewModel.fetchSessions()

@@ -26,23 +26,24 @@ struct PatientDashboardView: View {
                     Text(sessionManager.name ?? "").bold()
                     
                     Spacer()
-                    Button(action: {
-                        // Show notification when bell is tapped
-                    }){
-                        Image(systemName: "bell.fill")
-                            .font(.system(size: 24))
-                            .foregroundColor(.black)
-                        
-                        
-                        if viewModel.notificationCount > 0 {
-                            Text("\(viewModel.notificationCount)")
-                                .font(.caption2)
-                                .foregroundColor(.white)
-                                .padding(5)
-                                .background(Circle().fill(Color.red))
-                                .offset(x: 10, y: -10)
+                    if #available(iOS 17.0, *) {
+                        Button(action: {
+                            viewModel.logout()
+                            // Show notification when bell is tapped
+                        }){
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                                .font(.system(size: 24))
+                                .foregroundColor(.black)
+                            
+                            
+                        }.onChange(of:viewModel.isLoggedOut){
+                            path.append("login")
+                            path = NavigationPath()  // Clears navigation history
+
                         }
-                    }.padding()}
+                    } else {
+                        // Fallback on earlier versions
+                    }}
                 LazyHGrid(rows: rows, spacing: 16) {
                     ForEach(viewModel.categories, id: \.self){ category in
                         VStack

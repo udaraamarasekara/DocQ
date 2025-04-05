@@ -11,6 +11,7 @@ import UserNotifications
 class PatientDashboardViewModel:NSObject,UNUserNotificationCenterDelegate,ObservableObject{
     @Published var notificationCount: Int = 0
     @Published var isLoading = false
+    @Published var isLoggedOut:Bool = false
     @Published var clinics: [ClinicResponse] = []
     @Published var categories: [CategoryResponse] = []
     @Published var doctors: [DoctorResponse] = []
@@ -200,7 +201,60 @@ class PatientDashboardViewModel:NSObject,UNUserNotificationCenterDelegate,Observ
         }
     }
 
+    func logout() {
+        guard let url = URL(string: "\(Api.baseURL)logout") else { return }
 
+
+             var request = URLRequest(url:url)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            
+            guard let token = UserDefaults.standard.string(forKey: "token") else {
+                print("Token is missing")
+                return
+            }
+            
+            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            
+            DispatchQueue.main.async {
+            }
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                DispatchQueue.main.async {
+                    self.isLoggedOut = true
+                }
+
+                // Handle network errors
+                if let error = error {
+                    print("Network error: \(error.localizedDescription)")
+                    return
+                }
+
+                guard let data = data else {
+                    print("No data received from the server")
+                    return
+                }
+
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    print("Invalid response")
+                    return
+                }
+
+                if httpResponse.statusCode == 200 {
+                    do {
+                        let decodedResponse = try JSONDecoder().decode([SuccessResponse].self, from: data)
+                        DispatchQueue.main.async {
+                            
+                        }
+                    } catch {
+                        print("Decoding error: \(error.localizedDescription)")
+                    }
+                } else {
+                    print("Received non-200 response: \(httpResponse.statusCode)")
+                }
+            }.resume()
+        }
     func sendNotification() {
         // Request notification permission first
         requestNotificationPermission { granted in

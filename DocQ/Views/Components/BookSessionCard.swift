@@ -10,20 +10,21 @@ struct BookSessionCard: View {
     @StateObject var viewModel = BookingViewModel()
     @Binding var session:DoctorOrClinicSessionResponse  // Remove optional and make private
     @Binding var isShowPopup: Bool  // Remove optional binding
-    
+    @Binding var token:String
     var imageUrl: URL? {
         URL(string: "\(Api.imgURL)\(session.image)")
     }
     
-    init(session: Binding<DoctorOrClinicSessionResponse>, isShowPopup: Binding<Bool>) {
+    init(session: Binding<DoctorOrClinicSessionResponse>, isShowPopup: Binding<Bool>,token:Binding<String>) {
         self._session =  session  // Proper State initialization
         self._isShowPopup = isShowPopup  // Binding initialization
+        self._token = token
     }
     
     var body: some View {
         VStack {
             HStack {
-                if #available(iOS 15.0, *) {
+                if #available(iOS 17.0, *) {
                     AsyncImage(url: imageUrl) { image in
                         image
                             .resizable()
@@ -47,19 +48,25 @@ struct BookSessionCard: View {
                     Text(session.date).padding(.leading).frame(width: 180, alignment: .leading)
                 }
             }
-            if session.is_booked {
+            if session.is_booked && session.status != "finished"{
                 InverseCustomButton(title: "Booked") {
                     // You might want to show popup after booking:
                 }
                 .disabled(true) }
-               else{
-                InverseCustomButton(title: "Book Now") {
-                    viewModel.bookSession(sessionId: session.id)
-                    // You might want to show popup after booking:
-                    isShowPopup = true
+            else{
+                if #available(iOS 17.0, *) {
+                    
+                    InverseCustomButton(title:"Book Now") {
+                        viewModel.bookSession(sessionId: session.id)
+                    }.onChange(of:viewModel.token){
+                        token = viewModel.token
+                        isShowPopup = true
+
+                    }
+                    .disabled(session.status == "finished")
+                    
+                    .opacity(session.status == "finished" ? 0.5 : 1.0)
                 }
-                .disabled(session.status == "finished")
-                .opacity(session.status == "finished" ? 0.5 : 1.0)
             }
         }
         .frame(width: 300)

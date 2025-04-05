@@ -10,7 +10,7 @@ class BookingViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var successMessage: String?
-    @Published var token : String?
+    @Published var token : String!
 
     
     func bookSession(sessionId:Int){
@@ -66,7 +66,6 @@ class BookingViewModel: ObservableObject {
                     let decodedResponse = try JSONDecoder().decode(AppointmentTokenResponse.self, from: data)
                     DispatchQueue.main.async {
                         self.token =   decodedResponse.token
-                        print("ttt")
                     }
                 } catch {
                     print("Decoding error: \(error.localizedDescription)")

@@ -10,7 +10,7 @@ import SwiftUI
 @available(iOS 16.0, *)
 struct DoctorDashboardView: View {
     @EnvironmentObject var sessionManager: SessionManager
-    @ObservedObject var viewModel = DoctorDashboardViewModel()
+    @StateObject var viewModel = DoctorDashboardViewModel()
     @Binding var path:NavigationPath
 
     var body: some View {
@@ -25,15 +25,24 @@ struct DoctorDashboardView: View {
                         Text(sessionManager.name ?? "").bold()
                         
                         Spacer()
-                        Button(action: {
-                            // Show notification when bell is tapped
-                        }){
-                            Image(systemName: "rectangle.portrait.and.arrow.right")
-                                .font(.system(size: 24))
-                                .foregroundColor(.black)
-                            
-                            
-                            
+                        if #available(iOS 17.0, *) {
+                            Button(action: {
+                                // Show notification when bell is tapped
+                                viewModel.logout()
+                            }){
+                                Image(systemName: "rectangle.portrait.and.arrow.right")
+                                    .font(.system(size: 24))
+                                    .foregroundColor(.black)
+                                
+                                
+                                
+                            }.onChange(of:viewModel.isLoggedOut){
+                                path.append("login")
+                                path = NavigationPath()  // Clears navigation history
+                                
+                            }
+                        } else {
+                            // Fallback on earlier versions
                         }
                     }.padding()}
                 
@@ -102,17 +111,20 @@ struct DoctorDashboardView: View {
                     Spacer()
                 }.padding()
                 
-                List(viewModel.appointments) { appointment in
+                ForEach(viewModel.appointments ,id:\.id) { appointment in
                     
                     PatientCard(appointment:appointment)
+                }
+                if(viewModel.appointments.isEmpty)
+                {
+                    Text("No Patients yet!").bold().padding()
                 }
             }.onAppear(){
                 sessionManager.name = UserDefaults.standard.string(forKey: "name")
                 sessionManager.role = UserDefaults.standard.string(forKey: "role")
                 sessionManager.token = UserDefaults.standard.string(forKey: "token")
+                  viewModel.fetchMySession()
                 
-                viewModel.fetchMySession()
-                viewModel.myAppointments()
             }
             NextSessionPopup(isPresented:$viewModel.isShowPopup ,  title: "You Checked out", message: "Load next session?",onDismiss:{viewModel.isShowPopup = false;viewModel.mySession?.status="finished"}, onOk: {viewModel.fetchMySession()})
             // Set the delegate for handling notifications in the foreground

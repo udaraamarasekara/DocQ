@@ -64,3 +64,13 @@ struct DoctorOrClinicSessionResponse: Codable,Identifiable,Hashable {
     var image: String
     var  is_booked:Bool
 }
+
+struct DoctorSessionResponse: Codable,Identifiable,Hashable {
+    var id:Int
+    var name: String
+    var status:String
+    var date:String
+    var image: String
+    var  is_booked:Bool
+    var category:String
+}

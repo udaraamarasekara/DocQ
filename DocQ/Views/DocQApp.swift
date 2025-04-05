@@ -28,8 +28,8 @@ struct DocQApp: App {
                         switch route {
                         case "doctor":
                             DoctorDashboardView(path:$path)
-                            //                case "nurse":
-                            //                    NurseDashboardView()
+                                            case "nurse":
+                                                NurseDashboardView()
                         case "patient":
                             PatientDashboardView(path:$path)
                         case "userLogin":

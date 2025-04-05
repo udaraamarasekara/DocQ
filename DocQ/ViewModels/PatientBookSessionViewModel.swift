@@ -10,6 +10,7 @@ class PatientBookSessionViewModel:ObservableObject
 {
     var clinicId:Int
     var doctorId:Int
+    @Published var tokenCurnt :String = ""
     @Published var isLoading = false
     @Published var sessions:[DoctorOrClinicSessionResponse] = []
     @Published var doctors:[DoctorResponse] = []

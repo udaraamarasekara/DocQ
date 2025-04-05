@@ -107,7 +107,7 @@ struct PatientClinicsView: View {
                     }) {
                         Text(expanded ? "View Less" : "View More")
                             .font(.caption)
-                            .foregroundColor(Color("MainColor"))
+                            .foregroundColor(Color("MainColor")).padding(.horizontal)
                     }
                 }
                 
