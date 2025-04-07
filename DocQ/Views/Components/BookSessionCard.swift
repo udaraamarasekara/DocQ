@@ -56,16 +56,20 @@ struct BookSessionCard: View {
             else{
                 if #available(iOS 17.0, *) {
                     
-                    InverseCustomButton(title:"Book Now") {
-                        viewModel.bookSession(sessionId: session.id)
-                    }.onChange(of:viewModel.token){
-                        token = viewModel.token
-                        isShowPopup = true
-
+                    if #available(macOS 14.0, *) {
+                        InverseCustomButton(title:"Book Now") {
+                            viewModel.bookSession(sessionId: session.id,date:session.date)
+                        }.onChange(of:viewModel.token){
+                            token = viewModel.token
+                            isShowPopup = true
+                            
+                        }
+                        .disabled(session.status == "finished")
+                        
+                        .opacity(session.status == "finished" ? 0.5 : 1.0)
+                    } else {
+                        // Fallback on earlier versions
                     }
-                    .disabled(session.status == "finished")
-                    
-                    .opacity(session.status == "finished" ? 0.5 : 1.0)
                 }
             }
         }

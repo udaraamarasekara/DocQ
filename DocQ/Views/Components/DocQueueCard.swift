@@ -17,8 +17,19 @@
 
 import SwiftUI
 
+@available(iOS 16.0, *)
 struct DocQueueCard: View {
-    let imageUrl = URL(string: "https://picsum.photos/400/300")
+    @Binding var path:NavigationPath
+    var session: DoctorSessionResponse
+    var imageUrl: URL? {
+        URL(string: "\(Api.imgURL)\(session.image )")
+    }
+
+    init(session: DoctorSessionResponse,path:Binding<NavigationPath> ) {
+        self.session = session
+        _path = path
+    }
+    
     var body: some View {
         
         VStack{
@@ -38,20 +49,18 @@ struct DocQueueCard: View {
                     // Fallback on earlier versions
                 }
                 VStack{
-                    Text("Doctor Name").bold().padding().frame(width:180,alignment: .leading)
-                    Text("Category").padding(.leading).frame(width:180,alignment: .leading)
-                    Text("Status").padding(.leading).frame(width:180,alignment: .leading)
+                    Text(session.name).bold().padding().frame(width:180,alignment: .leading)
+                    Text(session.category).padding(.leading).frame(width:180,alignment: .leading)
+                    Text(session.status).padding(.leading).frame(width:180,alignment: .leading)
                 }
             }
-            InverseCustomButton(title:"View Patient Details"){}
+            InverseCustomButton(title:"View Patient Details"){
+                path.append(session)
+            }
         }.frame(width:300).padding()
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.gray, lineWidth: 1)
             )
     }
-}
-
-#Preview {
-    DocQueueCard()
 }

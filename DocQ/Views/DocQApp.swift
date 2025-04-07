@@ -29,7 +29,7 @@ struct DocQApp: App {
                         case "doctor":
                             DoctorDashboardView(path:$path)
                                             case "nurse":
-                                                NurseDashboardView()
+                            NurseDashboardView(path:$path)
                         case "patient":
                             PatientDashboardView(path:$path)
                         case "userLogin":
@@ -42,7 +42,11 @@ struct DocQApp: App {
                         PatientBookDocView(doctor:doc, path:$path)
 
                             }
-                
+                    .navigationDestination(for: DoctorSessionResponse.self){session in
+
+                        NurseDocApointView(path:$path, session:session)
+
+                    }
                     .navigationDestination(for: Route.self){route in
 
                         switch route {
@@ -53,6 +57,8 @@ struct DocQApp: App {
                                    }
                             }
             
+            }.onAppear(){
+                requestReminderPermission()
             }            .environmentObject(sessionManager)
 
         }

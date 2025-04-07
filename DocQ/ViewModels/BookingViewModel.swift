@@ -13,7 +13,7 @@ class BookingViewModel: ObservableObject {
     @Published var token : String!
 
     
-    func bookSession(sessionId:Int){
+    func bookSession(sessionId:Int,date:String){
         guard let url = URL(string: "\(Api.baseURL)appointment") else {
             print("Invalid URL")
             return
@@ -66,6 +66,7 @@ class BookingViewModel: ObservableObject {
                     let decodedResponse = try JSONDecoder().decode(AppointmentTokenResponse.self, from: data)
                     DispatchQueue.main.async {
                         self.token =   decodedResponse.token
+                        createReminder(date:date)
                     }
                 } catch {
                     print("Decoding error: \(error.localizedDescription)")

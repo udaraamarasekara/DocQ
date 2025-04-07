@@ -1,5 +1,3 @@
-
-
 //
 //  DoctorDashboard.swift
 //  DocQ
@@ -28,20 +26,24 @@ struct DoctorDashboardView: View {
                         
                         Spacer()
                         if #available(iOS 17.0, *) {
-                            Button(action: {
-                                // Show notification when bell is tapped
-                                viewModel.logout()
-                            }){
-                                Image(systemName: "rectangle.portrait.and.arrow.right")
-                                    .font(.system(size: 24))
-                                    .foregroundColor(.black)
-                                
-                                
-                                
-                            }.onChange(of:viewModel.isLoggedOut){
-                                path.append("login")
-                                path = NavigationPath()  // Clears navigation history
-                                
+                            if #available(macOS 14.0, *) {
+                                Button(action: {
+                                    // Show notification when bell is tapped
+                                    viewModel.logout()
+                                }){
+                                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                                        .font(.system(size: 24))
+                                        .foregroundColor(.black)
+                                    
+                                    
+                                    
+                                }.onChange(of:viewModel.isLoggedOut){
+                                    path.append("login")
+                                    path = NavigationPath()  // Clears navigation history
+                                    
+                                }
+                            } else {
+                                // Fallback on earlier versions
                             }
                         } else {
                             // Fallback on earlier versions

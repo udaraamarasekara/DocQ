@@ -7,14 +7,14 @@
 import Foundation;
 import Combine;
 import UserNotifications
-class NurseDashboardViewModel:NSObject,UNUserNotificationCenterDelegate,ObservableObject{
+class NurseDashboardViewModel:ObservableObject{
     @Published var notificationCount: Int = 0
     @Published var isLoggedOut:Bool = false
-
-       @Published var isLoading = false
-   
+    @Published var mySessions:[DoctorSessionResponse]=[]
+    @Published var isLoading = false
+    
     func fetchMySessions(){
-        guard let url = URL(string: "\(Api.baseURL)mySession") else {
+        guard let url = URL(string: "\(Api.baseURL)doctorsForClinicNurse") else {
             print("Invalid URL")
             return
         }
@@ -68,11 +68,10 @@ class NurseDashboardViewModel:NSObject,UNUserNotificationCenterDelegate,Observab
             // Handle successful response (status code 200)
             if httpResponse.statusCode == 200 {
                 do {
-                    let successResponse = try JSONDecoder().decode(SessionResponse.self, from: data)
+                    let successResponse = try JSONDecoder().decode([DoctorSessionResponse].self, from: data)
                     DispatchQueue.main.async {
                         // Update the session information
-                        self.mySession = successResponse
-                        self.myAppointments()
+                        self.mySessions = successResponse
                         self.isLoading = false
                     }
                 } catch {
@@ -134,7 +133,7 @@ class NurseDashboardViewModel:NSObject,UNUserNotificationCenterDelegate,Observab
 
                 if httpResponse.statusCode == 200 {
                     do {
-                        let decodedResponse = try JSONDecoder().decode([SuccessResponse].self, from: data)
+                        _ = try JSONDecoder().decode([SuccessResponse].self, from: data)
                         DispatchQueue.main.async {
                             
                         }
