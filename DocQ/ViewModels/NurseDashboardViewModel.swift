@@ -133,7 +133,7 @@ class NurseDashboardViewModel:ObservableObject{
 
                 if httpResponse.statusCode == 200 {
                     do {
-                        _ = try JSONDecoder().decode([SuccessResponse].self, from: data)
+                        _ = try JSONDecoder().decode(SuccessResponse.self, from: data)
                         DispatchQueue.main.async {
                             
                         }

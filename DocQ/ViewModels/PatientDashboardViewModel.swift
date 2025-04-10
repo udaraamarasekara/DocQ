@@ -243,7 +243,7 @@ class PatientDashboardViewModel:NSObject,UNUserNotificationCenterDelegate,Observ
 
                 if httpResponse.statusCode == 200 {
                     do {
-                        let decodedResponse = try JSONDecoder().decode([SuccessResponse].self, from: data)
+                        _ = try JSONDecoder().decode(SuccessResponse.self, from: data)
                         DispatchQueue.main.async {
                             
                         }

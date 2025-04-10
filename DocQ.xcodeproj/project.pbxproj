@@ -16,6 +16,8 @@
 		685D4BA02DA39B2D00FA1044 /* BookingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D4B9F2DA39B2D00FA1044 /* BookingViewModel.swift */; };
 		685D4BA22DA39C2200FA1044 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D4BA12DA39C2200FA1044 /* Reminder.swift */; };
 		685D4BA62DA39EA900FA1044 /* NurseDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D4BA52DA39EA900FA1044 /* NurseDashboardView.swift */; };
+		686CCFCD2DA4134100660214 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 686CCFCC2DA4134100660214 /* EventKit.framework */; };
+		686CCFCF2DA4164400660214 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 686CCFCE2DA4164400660214 /* EventKitUI.framework */; platformFilter = ios; };
 		6881AACB2D9039F9002B015F /* UserRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6881AACA2D9039F9002B015F /* UserRegistrationView.swift */; };
 		6881AACD2D9039FA002B015F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6881AACC2D9039FA002B015F /* Assets.xcassets */; };
 		6881AAD12D9039FA002B015F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6881AAD02D9039FA002B015F /* Preview Assets.xcassets */; };
@@ -65,6 +67,9 @@
 		685D4B9F2DA39B2D00FA1044 /* BookingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingViewModel.swift; sourceTree = "<group>"; };
 		685D4BA12DA39C2200FA1044 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		685D4BA52DA39EA900FA1044 /* NurseDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NurseDashboardView.swift; sourceTree = "<group>"; };
+		686CCFC92DA4109B00660214 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		686CCFCC2DA4134100660214 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.4.sdk/System/Library/Frameworks/EventKit.framework; sourceTree = DEVELOPER_DIR; };
+		686CCFCE2DA4164400660214 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.4.sdk/System/Library/Frameworks/EventKitUI.framework; sourceTree = DEVELOPER_DIR; };
 		6881AAC52D9039F9002B015F /* DocQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6881AACA2D9039F9002B015F /* UserRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegistrationView.swift; sourceTree = "<group>"; };
 		6881AACC2D9039FA002B015F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,6 +105,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				686CCFCF2DA4164400660214 /* EventKitUI.framework in Frameworks */,
+				686CCFCD2DA4134100660214 /* EventKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,12 +127,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		686CCFCB2DA4134100660214 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				686CCFCE2DA4164400660214 /* EventKitUI.framework */,
+				686CCFCC2DA4134100660214 /* EventKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6881AABC2D9039F9002B015F = {
 			isa = PBXGroup;
 			children = (
 				6881AAC72D9039F9002B015F /* DocQ */,
 				6881AAD92D9039FB002B015F /* DocQTests */,
 				6881AAE32D9039FB002B015F /* DocQUITests */,
+				686CCFCB2DA4134100660214 /* Frameworks */,
 				6881AAC62D9039F9002B015F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -143,6 +160,7 @@
 		6881AAC72D9039F9002B015F /* DocQ */ = {
 			isa = PBXGroup;
 			children = (
+				686CCFC92DA4109B00660214 /* Info.plist */,
 				685D4BA12DA39C2200FA1044 /* Reminder.swift */,
 				6881AAF52D903C56002B015F /* ViewModels */,
 				6881AAF42D903C40002B015F /* Models */,

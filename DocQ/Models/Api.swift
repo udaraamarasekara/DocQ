@@ -6,7 +6,7 @@
 //
 
 struct Api {
-    static let baseURL = "http://127.0.0.1:8000/api/"
-    static let imgURL = "http://127.0.0.1:8000/"
+    static let baseURL = "https://docq-5506ef9bae5c.herokuapp.com/api/"
+    static let imgURL = "https://docq-5506ef9bae5c.herokuapp.com/"
 
 }
